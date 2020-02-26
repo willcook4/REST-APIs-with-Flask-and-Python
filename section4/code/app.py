@@ -15,10 +15,10 @@ jwt = JWT(app, authenticate, identity) # /auth endpoint
 items = []
 
 # Student inherits from the Resource class
-class Student(Resource):
-  # get is a class method to handle the matching HTTP Verb GET
-  def get(self, name):
-    return { 'student': name }
+# class Student(Resource):
+#   # get is a class method to handle the matching HTTP Verb GET
+#   def get(self, name):
+#     return { 'student': name }
 
 class Item(Resource):
   @jwt_required()
@@ -38,13 +38,18 @@ class Item(Resource):
     items.append(item)
     return item, 201
 
+  def delete(self, name):
+    global items # use the global items variable, don't create a local var 
+    items = list(filter(lambda x: x['name'] != name, items))
+    return { 'message': f"Item deleted: {name}" }
+
 class ItemList(Resource):
   def get(self):
     return { 'items': items }
 
   
 # Endpoints
-api.add_resource(Student, '/student/<string:name>') # eg. http://localhost:5000/student/Will
+# api.add_resource(Student, '/student/<string:name>') # eg. http://localhost:5000/student/Will
 
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(ItemList, '/items')
