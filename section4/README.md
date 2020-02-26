@@ -5,6 +5,6 @@
 - To (enter) activate the environment: ```source venv/bin/activate```
 - To (exit) deactivate the environment: ```deactivate```
 
-## TODO
+## Restful API with flask_restful
 
-- add .venv folder to .gitignore
+This app is a 101 API built with flask_restful.
