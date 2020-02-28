@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
+from datetime import timedelta
 
 from security import authenticate, identity
 from user import UserRegister
@@ -10,8 +11,9 @@ PORT = 5000
 app = Flask(__name__)
 api = Api(app)
 app.secret_key = 'jose'
-
-jwt = JWT(app, authenticate, identity) # /auth endpoint
+app.config['JWT_AUTH_URL_RULE'] = '/login' # change the default JWT /auth endpoint to /login 
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800) # set JWT token to expire within 30 min
+jwt = JWT(app, authenticate, identity) 
 
 # Student inherits from the Resource class
 # class Student(Resource):

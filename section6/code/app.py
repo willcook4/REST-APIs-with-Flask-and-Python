@@ -3,12 +3,14 @@ from flask_restful import Api
 from flask_jwt import JWT
 from datetime import timedelta
 
+from db import db
 from security import authenticate, identity
 from resources.user import UserRegister
 from resources.item import Item, ItemList
 
 PORT = 5000
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # use the sqlalchemy tracker not the flask_sqlalchemy tracker
 api = Api(app)
 app.secret_key = 'jose'
 app.config['JWT_AUTH_URL_RULE'] = '/login' # change the default JWT /auth endpoint to /login 
