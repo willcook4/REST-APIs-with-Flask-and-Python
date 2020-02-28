@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from models.store import StoreModel
 
-class StoreModel(Resource):
+class Store(Resource):
   def get(self, name):
     store = StoreModel.find_by_name(name)
     if store:
@@ -29,4 +29,5 @@ class StoreModel(Resource):
     return { 'message': 'Store deleted' }
 
 class StoreList(Resource):
-  return { 'stores': [store.json() for store in StoreModel.query.all()] }
+  def get(self):
+    return { 'stores': [ store.json() for store in StoreModel.query.all() ] }
