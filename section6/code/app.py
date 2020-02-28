@@ -10,6 +10,7 @@ from resources.item import Item, ItemList
 
 PORT = 5000
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # use the sqlalchemy tracker not the flask_sqlalchemy tracker
 api = Api(app)
 app.secret_key = 'jose'
@@ -32,4 +33,5 @@ api.add_resource(UserRegister, '/register')
 
 # only run this file once. 
 if __name__ == "__main__":
+  db.init_app(app)
   app.run(port=PORT, debug=True)
