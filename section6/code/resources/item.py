@@ -14,6 +14,11 @@ class Item(Resource):
     type=float,
     required=True,
     help="This field cannot be left blank")
+  
+  parser.add_argument('store_id', 
+    type=int,
+    required=True,
+    help="Every item needs a store id")
 
   # @jwt_required(), decorator means the jwt rquest token must be vaild and provided to use this method
   @jwt_required()
@@ -54,7 +59,7 @@ class Item(Resource):
     item = ItemModel.find_by_name(name)
     
     if item is None:
-      item = ItemModel(name, data['price'])
+      item = ItemModel(name, **data)
     else:
       try:
         item.price = data['price']
